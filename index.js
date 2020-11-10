@@ -21,17 +21,19 @@ const testnet = 'https://ropsten.infura.io/v3/2aa3f1f44c224eff83b07cef6a5b48b5'
 const feed = new hypercore(dir)
 
 const index = new Indexer(testnet, feed)
-const since = 0x899b00 - 200
+const since = 9043715 - 200
 
-const server = http.createServer((req, res) => {
+const server = http.createServer(async (req, res) => {
   if (req.method === 'POST') {
+    console.log('request')
     const u = new url.URL(req.url, 'http://dummyurl:0000')
 
+    console.log(u)
     switch (u.pathname) {
       case '/add' :
         const address = u.searchParams.get('addr')
 
-        index.add(address)
+        await index.add(address)
         console.log('now tracking: ' + address)
 
         res.end('ok')
