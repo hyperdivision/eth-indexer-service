@@ -17,22 +17,23 @@ var args = minimist(process.argv.slice(2), {
 const port = parseInt(args.p) || 8080
 const dir = args.d || './ropsten-index'
 
-const testnet = 'https://ropsten.infura.io/v3/2aa3f1f44c224eff83b07cef6a5b48b5'
+const TESTNET = 'https://ropsten.infura.io/v3/2aa3f1f44c224eff83b07cef6a5b48b5'
 const feed = new hypercore(dir)
 
-const index = new Indexer(testnet, feed)
-const since = 9043715 - 200
+const index = new Indexer(feed, {
+  live: true,
+  endpoint: TESTNET
+})
 
 const server = http.createServer(async (req, res) => {
   if (req.method === 'POST') {
-    console.log('request')
     const u = new url.URL(req.url, 'http://dummyurl:0000')
 
-    console.log(u)
     switch (u.pathname) {
       case '/add' :
         const address = u.searchParams.get('addr')
 
+        console.log('trying to track: ' + address)
         await index.add(address)
         console.log('now tracking: ' + address)
 
@@ -51,7 +52,7 @@ process.on('SIGTERM', stop)
 
 let swarm
 feed.ready(async () => {
-  index.start(since)
+  index.start()
 
   console.log('index stored at:', feed.key.toString('hex'))
 
