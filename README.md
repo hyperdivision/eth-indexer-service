@@ -1,4 +1,4 @@
-# eth-transaction-service
+# eth-indexer-service
 
 Runs a eth-transaction-indexer and logs to a Hyperbee.
 
@@ -8,7 +8,7 @@ Start the service with:
 
 ```
 git clone ...
-cd bfx-support-backend-bot
+cd eth-indexer-service
 npm install
 
 node index -p <PORT> -d <DIRECTORY>
