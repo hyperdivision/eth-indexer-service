@@ -21,7 +21,6 @@ const TESTNET = 'https://ropsten.infura.io/v3/2aa3f1f44c224eff83b07cef6a5b48b5'
 const feed = new hypercore(dir)
 
 const index = new Indexer(feed, {
-  live: true,
   endpoint: TESTNET
 })
 
@@ -33,7 +32,6 @@ const server = http.createServer(async (req, res) => {
       case '/add' :
         const address = u.searchParams.get('addr')
 
-        console.log('trying to track: ' + address)
         await index.add(address)
         console.log('now tracking: ' + address)
 
@@ -57,7 +55,7 @@ feed.ready(async () => {
   console.log('index stored at:', feed.key.toString('hex'))
 
   server.listen(port)
-  const swarm = replicate(feed, { lookup: true, announce: true })
+  const swarm = replicate(feed, { lookup: false, announce: true, live: true, upload: true })
 
   feed.on('close', err => {
     if (err) throw err

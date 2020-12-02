@@ -1,0 +1,26 @@
+{
+  "name": "eth-indexer-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hyperdivision/eth-transaction-service.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hyperdivision/eth-transaction-service/issues"
+  },
+  "homepage": "https://github.com/hyperdivision/eth-transaction-service#readme",
+  "dependencies": {
+    "@hyperdivision/eth-transaction-indexer": "^1.0.0",
+    "@hyperswarm/replicator": "^1.8.0",
+    "hypercore": "^9.6.0",
+    "minimist": "^1.2.5"
+  }
+}
